@@ -15,29 +15,23 @@ router.get("/category", async (req, res) => {
   }
 });
 
-router.get("/pricemin", async (req, res) => {
-  try {
-    const q = parseInt(req.query.q);
-    const productData = await Product.find({
-      priceMin: { $lte: q },
-    }).sort({ createdAt: -1 }); // newly saved data will be shown first
-    return res.status(200).json(productData);
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
+router.post("/price", async (req, res) => {
+   const min = req.body.min || 0;
+   const max = req.body.max || 1000000;
+
+   try {
+     const products = await Product.find({
+       priceMin: { $lte: max },
+       priceMax: { $gte: min },
+     });
+     res.json(products);
+   } catch (error) {
+     res.status(500).json({ message: error.message });
+   }
+
 });
 
-router.get("/pricemax", async (req, res) => {
-  try {
-    const q = parseInt(req.query.q);
-    const productData = await Product.find({
-      priceMax: { $gte: q },
-    }).sort({ createdAt: -1 }); // newly saved data will be shown first
-    return res.status(200).json(productData);
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
-});
+
 
 router.get("/availableproducts", async (req, res) => {
    try {
