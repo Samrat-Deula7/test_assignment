@@ -44,7 +44,6 @@ router.post(
 // Route 2 used to fetch all the products
 router.get("/fetchallproducts", async (req, res) => {
   try {
-    console.log("incoming POST request from frontend");
     let product = await Product.find();
     res.json(product);
   } catch (error) {
