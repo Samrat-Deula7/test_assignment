@@ -5,6 +5,7 @@ const Product =require("../dbModel/dbSchema")
 
 const { body, validationResult } = require("express-validator");
 
+// Route 1 use to input the product
 router.post(
   "/addproducts",
   [
@@ -39,5 +40,17 @@ router.post(
  }
   }
 );
+
+// Route 2 used to fetch all the products
+router.get("/fetchallproducts", async (req, res) => {
+  try {
+    console.log("incoming POST request from frontend");
+    let product = await Product.find();
+    res.json(product);
+  } catch (error) {
+    res.status(500).send("Some error occured while fetching all the data");
+  }
+});
+
 
 module.exports = router;
