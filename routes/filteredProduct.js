@@ -5,7 +5,7 @@ const Product =require("../dbModel/dbSchema")
 
 router.get("/category", async (req, res) => {
   try {
-    const q = req.query.q;
+    const q = req.query.q || "electronics";
     const productData = await Product.find({
       category: { $regex: q, $options: "i" }, // food = Food
     }).sort({ createdAt: -1 }); // newly saved data will be shown first
