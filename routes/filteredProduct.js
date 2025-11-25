@@ -39,5 +39,14 @@ router.get("/pricemax", async (req, res) => {
   }
 });
 
+router.get("/availableproducts", async (req, res) => {
+   try {
+     let product = await Product.find({ Availability: true });
+     res.json(product);
+   } catch (error) {
+     res.status(500).send("Some error occured while fetching all the data");
+   }
+});
+
 
 module.exports = router;
